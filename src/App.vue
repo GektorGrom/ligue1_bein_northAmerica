@@ -1,23 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav" class="hidden">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <h1 class="text-right">{{today}}</h1>
     <router-view/>
   </div>
 </template>
 
 <script>
-import format from 'date-fns/format';
 
 export default {
-  data() {
-    return {
-      today: format(new Date(), 'DD.MM.YY'),
-    }
-  }
+
 }
 </script>
 
@@ -55,5 +45,11 @@ export default {
 }
 .text-left {
   text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.block-center {
+  margin: 0 auto;
 }
 </style>

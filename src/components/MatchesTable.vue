@@ -1,6 +1,19 @@
 <template>
   <div>
-    <div bp="grid 12">
+    <h5 class="text-right">{{today}}</h5>
+    <div bp="grid vertical-center" class="matches-block-loading" v-if="isLoading">
+      <radar-spinner
+        :animation-duration="1500"
+        :size="120"
+        class="block-center"
+        color="#ff1d5e"
+        bp="12"
+      />
+    </div>
+    <div bp="grid 12 vertical-center" class="matches-block-loading" v-if="noMatches">
+      <h1>No matches available for this day {{today}}</h1>
+    </div>
+    <div bp="grid 12" class="matches-block" v-if="showMatches">
       <div bp="grid vertical-center" class="match-row" v-bind:key="match.id" v-for="match in matches">
         <div bp="6">
           <div bp="grid vertical-center">
@@ -15,12 +28,23 @@
         </div>
       </div>
     </div>
+    <div class="container container-footer">
+      <div bp="grid 6">
+        <div class="text-left">
+          <h2><router-link :to="prevLink">PREV</router-link></h2>
+        </div>
+        <div class="text-right"><h2><router-link :to="nextLink">NEXT</router-link></h2></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
+import addDays from 'date-fns/add_days'
+import { RadarSpinner  } from 'epic-spinners';
 
 import ClubLogo from '@/components/ClubLogo.vue';
 import ChanelLogo from '@/components/ChanelLogo.vue';
@@ -29,18 +53,53 @@ export default {
   name: 'MatchesTable',
   components: {
     ClubLogo,
-    ChanelLogo
+    ChanelLogo,
+    RadarSpinner
   },
-  props: {
-    matches: Array,
-    isLoading: Boolean,
+  data() {
+    return {
+      today: format(parse(this.$route.params.date || new Date), 'YYYY-MM-DD'),
+      matches: [],
+      isLoading: true,
+      prevLink: '/matches/' + format(addDays(parse(this.$route.params.date || new Date), -1), 'YYYY-MM-DD'),
+      nextLink: '/matches/' + format(addDays(parse(this.$route.params.date || new Date), 1), 'YYYY-MM-DD')
+    };
   },
   methods: {
     parseTime: (epoch) => {
-      console.log(epoch);
       return format(parse(epoch), 'hh:mm');
     },
   },
+  mounted() {
+    axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${this.$route.params.date || format(new Date, 'YYYY-MM-DD')}`)
+      .then(({ data }) => {
+        this.matches = data.Items.sort((a, b) => a.start - b.start);
+        this.isLoading = false;
+      });
+  },
+  computed: {
+    showMatches: function () {
+      return !this.isLoading && this.matches.length > 0;
+    },
+    noMatches: function () {
+      return !this.isLoading && this.matches.length === 0;
+    }
+  },
+  watch: {
+    '$route' (to) {
+      this.isLoading = true;
+      this.matches = [];
+      this.today = format(parse(this.$route.params.date), 'YYYY-MM-DD'),
+      this.prevLink = format(addDays(parse(to.params.date), -1), 'YYYY-MM-DD');
+      this.nextLink = format(addDays(parse(to.params.date), 1), 'YYYY-MM-DD');
+      axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${to.params.date}`)
+        .then(({ data }) => {
+          this.matches = data.Items.sort((a, b) => a.start - b.start);
+          this.isLoading = false;
+        });
+
+    }
+  }
 };
 </script>
 
@@ -63,5 +122,30 @@ a {
 .match-row {
   padding-top: 15px;
   border-top: 1px solid #5c6bc099;
+}
+.container {
+  display: block;
+  max-width: 980px;
+  margin: 0 auto 0;
+}
+.container-footer {
+  position: fixed;
+  background-color: #dbde3b;
+  bottom: 0;
+  left: 25px;
+  right: 25px;
+}
+a {
+  text-decoration: none;
+  color: #673ab7a3;
+  text-shadow: 2px 2px 3px rgba(103, 58, 183, 0.18);
+  font-weight: 700;
+}
+.matches-block {
+  min-height: 500px;
+  margin-bottom: 50px;
+}
+.matches-block-loading {
+  grid-template-rows: 500px;
 }
 </style>
