@@ -1,5 +1,5 @@
 <template>
-  <div bp="5" class="logo-wrapper">
+  <div bp="5@sm 4" class="logo-wrapper">
     <img v-bind:src="getLogoSrc" :alt="team">
   </div>
 </template>

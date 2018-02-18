@@ -1,6 +1,6 @@
 {
-  "name": "scheduleFront",
-  "short_name": "scheduleFront",
+  "name": "Ligue 1 TV Schedule",
+  "short_name": "schedule",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#E1DC40",
+  "theme_color": "#1F273C"
 }

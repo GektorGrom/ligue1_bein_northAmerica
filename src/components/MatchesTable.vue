@@ -18,7 +18,7 @@
         <div bp="6">
           <div bp="grid vertical-center">
             <ClubLogo v-bind:team="match.home"/>
-            <span bp="2"><h2>vs</h2></span>
+            <span bp="2 2@sm"><h2>vs</h2></span>
             <ClubLogo v-bind:team="match.away"/>
           </div>
         </div>
@@ -132,8 +132,9 @@ a {
   position: fixed;
   background-color: #dbde3b;
   bottom: 0;
-  left: 25px;
-  right: 25px;
+  left: 0;
+  right: 0;
+  padding: 0 25px;
 }
 a {
   text-decoration: none;
@@ -142,10 +143,10 @@ a {
   font-weight: 700;
 }
 .matches-block {
-  min-height: 500px;
-  margin-bottom: 50px;
+  /*min-height: 500px;*/
+  margin-bottom: 100px;
 }
 .matches-block-loading {
-  grid-template-rows: 500px;
+  height: calc( 100vh - 50vh );
 }
 </style>
