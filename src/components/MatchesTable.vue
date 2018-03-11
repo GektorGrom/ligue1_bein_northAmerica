@@ -49,6 +49,7 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import addDays from 'date-fns/add_days'
 import { RadarSpinner  } from 'epic-spinners';
+import 'tocca';
 
 import ClubLogo from '@/components/ClubLogo.vue';
 import ChanelLogo from '@/components/ChanelLogo.vue';
@@ -81,6 +82,26 @@ export default {
         this.matches = data.Items.sort((a, b) => a.start - b.start);
         this.isLoading = false;
       });
+    addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        this.$router.push(this.prevLink);
+        return;
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        this.$router.push(this.nextLink);
+        return;
+      }
+    });
+    document.getElementById('app').addEventListener('swipeleft', (e) => {
+      e.preventDefault();
+      this.$router.push(this.nextLink);
+    })
+    document.getElementById('app').addEventListener('swiperight', (e) => {
+      e.preventDefault();
+      this.$router.push(this.prevLink);
+    })
   },
   computed: {
     showMatches: function () {
