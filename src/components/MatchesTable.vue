@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h5 class="text-right">{{today}}</h5>
+    <div bp="grid 6">
+      <div><h5 class="text-left">{{dayName}}</h5></div>
+      <div><h5 class="text-right">{{today}}</h5></div>
+    </div>
+
     <div bp="grid vertical-center" class="matches-block-loading" v-if="isLoading">
       <radar-spinner
         :animation-duration="1500"
@@ -14,7 +18,7 @@
       <h1>No matches available for this day {{today}}</h1>
     </div>
     <div bp="grid 12" class="matches-block" v-if="showMatches">
-      <div bp="grid vertical-center" class="match-row" v-bind:key="match.id" v-for="match in matches">
+      <div bp="grid vertical-center" class="match-row" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in matches">
         <div bp="6">
           <div bp="grid vertical-center">
             <ClubLogo v-bind:team="match.home"/>
@@ -59,6 +63,7 @@ export default {
   data() {
     return {
       today: format(parse(this.$route.params.date || new Date), 'YYYY-MM-DD'),
+      dayName: format(parse(this.$route.params.date || new Date), 'dddd'),
       matches: [],
       isLoading: true,
       prevLink: '/matches/' + format(addDays(parse(this.$route.params.date || new Date), -1), 'YYYY-MM-DD'),
@@ -67,7 +72,7 @@ export default {
   },
   methods: {
     parseTime: (epoch) => {
-      return format(parse(epoch), 'hh:mm');
+      return format(parse(epoch), 'HH:mm');
     },
   },
   mounted() {
@@ -90,6 +95,7 @@ export default {
       this.isLoading = true;
       this.matches = [];
       this.today = format(parse(this.$route.params.date), 'YYYY-MM-DD'),
+      this.dayName = format(parse(this.$route.params.date), 'dddd'),
       this.prevLink = format(addDays(parse(to.params.date), -1), 'YYYY-MM-DD');
       this.nextLink = format(addDays(parse(to.params.date), 1), 'YYYY-MM-DD');
       axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${to.params.date}`)
@@ -148,5 +154,31 @@ a {
 }
 .matches-block-loading {
   height: calc( 100vh - 50vh );
+}
+.muted {
+  background-color: #f5f5f540;
+  border-top-color: #bdbdbd85;
+  position: relative;
+}
+.muted::before,
+.muted::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.muted::before {
+  border-width: 1.5em;
+  border-right-color: #f5f5f540;
+  border-top-color: #f5f5f540;
+}
+
+.muted::after {
+  border-width: 1.5em;
+  border-right-color: #bdbdbd85;
+  border-top-color: #bdbdbd85;
 }
 </style>

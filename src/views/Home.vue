@@ -27,4 +27,10 @@ export default {
   .logo-img {
     max-width: 450px;
   }
+  .ellipsis {
+    word-wrap: unset;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+  }
 </style>

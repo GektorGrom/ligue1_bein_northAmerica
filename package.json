@@ -1,5 +1,6 @@
 {
   "name": "scheduleFront",
+  "description": "Ligue 1 TV Schedule",
   "version": "0.1.0",
   "private": true,
   "scripts": {

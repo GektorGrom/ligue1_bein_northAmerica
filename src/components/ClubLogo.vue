@@ -1,6 +1,11 @@
 <template>
   <div bp="5@sm 4" class="logo-wrapper">
-    <img v-bind:src="getLogoSrc" :alt="team">
+    <div v-if="clubLogo">
+      <div class="unknown-club-name hide-small">{{team}}</div>
+      <img class="narrow-img hide-small" v-bind:src="getLogoSrc" :alt="team">
+      <h2 class="hide-large ellipsis">{{team}}</h2>
+    </div>
+    <img v-else v-bind:src="getLogoSrc" :alt="team">
   </div>
 </template>
 
@@ -16,6 +21,9 @@ export default {
     },
   },
   computed: {
+    clubLogo: function() {
+      return getClubLogo(this.team) === 'unknown.svg'
+    },
     getLogoSrc: function() {
       return `https://s3-us-west-2.amazonaws.com/ligue1-us-schedule/images/club-logo/${getClubLogo(this.team)}`
     }
@@ -28,6 +36,25 @@ export default {
     width: 100%;
     height: 100%;
   }
+  .narrow-img {
+    width: 60%;
+    height: 60%;
+  }
+  .unknown-club-name {
+    font-weight: 700;
+    font-size:18px;
+  }
+  @media (max-width: 480px) {
+    .hide-small {
+      display: none;
+    }
+  }
+  @media (min-width: 480px) {
+    .hide-large {
+      display: none;
+    }
+  }
+
   /*.logo-wrapper {*/
     /*border-radius: 50%;*/
     /*background-color: #fff;*/

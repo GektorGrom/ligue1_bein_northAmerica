@@ -80,6 +80,6 @@ const getClubLogo = (team) => {
   if (t.includes('metz')) {
     return 'fc-metz.svg'
   }
-  return '';
+  return 'unknown.svg';
 }
 export default getClubLogo;
