@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "aws s3 cp dist s3://ligue1-us-schedule/ --recursive --acl public-read"
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
     "axios": "^0.18.0",
