@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <img class="img-full-width logo-img" src="../assets/naming-ligue-1-lfp-1.png">
+    <a href="http://www.ligue1.com/">
+      <img class="img-full-width logo-img" src="../assets/naming-ligue-1-lfp-1.png">
+    </a>
     <MatchesTable />
   </div>
 </template>
