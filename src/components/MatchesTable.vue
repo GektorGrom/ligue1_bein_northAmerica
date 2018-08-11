@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div bp="grid 6">
+    <div bp="grid 4">
       <div><h5 class="text-left">{{dayName}}</h5></div>
+      <div><button
+        v-if="isRerun"
+        v-on:click="liveOnly = !liveOnly"
+        class="btn btn-rerun">{{liveOnly ? 'Show' : 'Hide'}} Rerun</button></div>
       <div><h5 class="text-right">{{today}}</h5></div>
     </div>
 
@@ -10,12 +14,18 @@
     </div>
     <transition name="fade" :duration="2500">
       <div bp="grid 12" class="matches-block" v-if="showMatches">
-        <div bp="grid vertical-center" class="match-row" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in matches">
-          <div bp="6">
+        <div bp="grid vertical-center" class="match-row" v-if="!liveOnly || match.isLive !== 'false'" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in matches">
+          <div bp="6" v-if="match.isLigueShow === 'false'">
             <div bp="grid vertical-center">
               <ClubLogo v-bind:team="match.home"/>
               <span bp="2 2@sm"><h2>vs</h2></span>
               <ClubLogo v-bind:team="match.away"/>
+            </div>
+          </div>
+          <div bp="6" v-if="match.isLigueShow === 'true'">
+            <div bp="grid vertical-center">
+              <img bp="3 hide show@md" class="ligue-one-show__img" src="https://ligue1.jesse.co.ua/images/club-logo/football.svg" alt="Ligue 1 Show logo">
+              <h2 bp="9@md" class="text-left">{{match.title}}</h2>
             </div>
           </div>
           <div bp="3" class="demo"><h2>{{parseTime(match.start)}}</h2></div>
@@ -59,6 +69,8 @@ export default {
       today: format(parse(this.$route.params.date || new Date), 'YYYY-MM-DD'),
       dayName: format(parse(this.$route.params.date || new Date), 'dddd'),
       matches: [],
+      isRerun: false,
+      liveOnly: false,
       isLoading: true,
       prevLink: '/matches/' + format(addDays(parse(this.$route.params.date || new Date), -1), 'YYYY-MM-DD'),
       nextLink: '/matches/' + format(addDays(parse(this.$route.params.date || new Date), 1), 'YYYY-MM-DD')
@@ -73,6 +85,7 @@ export default {
     axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${this.$route.params.date || format(new Date, 'YYYY-MM-DD')}`)
       .then(({ data }) => {
         this.matches = data.Items.sort((a, b) => a.start - b.start);
+        this.isRerun = data.Items.some(el => el.isLive === 'false');
         this.isLoading = false;
       });
     addEventListener('keydown', (event) => {
@@ -90,11 +103,11 @@ export default {
     document.getElementById('app').addEventListener('swipeleft', (e) => {
       e.preventDefault();
       this.$router.push(this.nextLink);
-    })
+    });
     document.getElementById('app').addEventListener('swiperight', (e) => {
       e.preventDefault();
       this.$router.push(this.prevLink);
-    })
+    });
   },
   computed: {
     showMatches: function () {
@@ -114,6 +127,7 @@ export default {
       this.nextLink = format(addDays(parse(to.params.date), 1), 'YYYY-MM-DD');
       axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${to.params.date}`)
         .then(({ data }) => {
+          this.isRerun = data.Items.some(el => el.isLive === 'false');
           this.matches = data.Items.sort((a, b) => a.start - b.start);
           this.isLoading = false;
         });
@@ -200,5 +214,21 @@ a {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+.btn {
+  font-size: 0.83em;
+  width: 100%;
+  height: 100%;
+  font-weight: 700;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  background-color: transparent;
+  border: none;
+  outline: transparent;
+}
+.ligue-one-show__img {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 15px;
 }
 </style>
