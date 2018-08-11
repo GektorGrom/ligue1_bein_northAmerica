@@ -5,7 +5,7 @@ const getClubLogo = (team) => {
     return 'paris-saint-germain.svg'
   }
   // AS Monaco
-  if (t.includes('monaco')) {
+  if (t.includes('naco')) {
     return 'as-monaco.svg'
   }
   // Olympique de Marseille
@@ -79,6 +79,14 @@ const getClubLogo = (team) => {
   // FC Metz
   if (t.includes('metz')) {
     return 'fc-metz.svg'
+  }
+  // Nimes Olympique
+  if (t.includes('nimes')) {
+    return 'nimes-olympique.svg'
+  }
+  // Stade Reims
+  if (t.includes('reims')) {
+    return 'stade-de-reims.svg'
   }
   return 'unknown.svg';
 }

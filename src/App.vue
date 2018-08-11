@@ -21,7 +21,8 @@ export default {
 }
 @media (min-width: 900px) {
   #app {
-    margin: 0 150px;
+    max-width: 980px;
+    margin: 0 auto;
   }
 }
 

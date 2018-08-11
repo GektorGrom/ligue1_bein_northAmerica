@@ -5,7 +5,8 @@ AWS_ID=$(aws sts get-caller-identity --output text --query Account)
 if [ $AWS_ID = 082604792641 ]
 then
   aws s3 cp dist s3://ligue1-us-schedule/ --recursive --acl public-read
-  aws cloudfront create-invalidation --distribution-id E39STSDWAB2PKG --paths "/index.html"
+  aws cloudfront create-invalidation --distribution-id E39STSDWAB2PKG --paths /index.html /service-worker.js
 else
   echo check you default AWS profile
+  exit 1
 fi

@@ -5,33 +5,26 @@
       <div><h5 class="text-right">{{today}}</h5></div>
     </div>
 
-    <div bp="grid vertical-center" class="matches-block-loading" v-if="isLoading">
-      <radar-spinner
-        :animation-duration="1500"
-        :size="120"
-        class="block-center"
-        color="#ff1d5e"
-        bp="12"
-      />
-    </div>
     <div bp="grid 12 vertical-center" class="matches-block-loading" v-if="noMatches">
       <h1>No matches available for this day {{today}}</h1>
     </div>
-    <div bp="grid 12" class="matches-block" v-if="showMatches">
-      <div bp="grid vertical-center" class="match-row" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in matches">
-        <div bp="6">
-          <div bp="grid vertical-center">
-            <ClubLogo v-bind:team="match.home"/>
-            <span bp="2 2@sm"><h2>vs</h2></span>
-            <ClubLogo v-bind:team="match.away"/>
+    <transition name="fade" :duration="2500">
+      <div bp="grid 12" class="matches-block" v-if="showMatches">
+        <div bp="grid vertical-center" class="match-row" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in matches">
+          <div bp="6">
+            <div bp="grid vertical-center">
+              <ClubLogo v-bind:team="match.home"/>
+              <span bp="2 2@sm"><h2>vs</h2></span>
+              <ClubLogo v-bind:team="match.away"/>
+            </div>
+          </div>
+          <div bp="3" class="demo"><h2>{{parseTime(match.start)}}</h2></div>
+          <div bp="3" class="text-left">
+            <ChanelLogo v-bind:chanel="match.chanel" />
           </div>
         </div>
-        <div bp="3" class="demo"><h2>{{parseTime(match.start)}}</h2></div>
-        <div bp="3" class="text-left">
-          <ChanelLogo v-bind:chanel="match.chanel" />
-        </div>
       </div>
-    </div>
+    </transition>
     <div class="container container-footer">
       <div bp="grid 6">
         <div class="text-left">
@@ -201,5 +194,11 @@ a {
   border-width: 1.5em;
   border-right-color: #bdbdbd85;
   border-top-color: #bdbdbd85;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
