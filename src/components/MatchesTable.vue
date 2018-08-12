@@ -15,7 +15,7 @@
     <transition name="fade" :duration="2500">
       <div bp="grid 12" class="matches-block" v-if="showMatches">
         <div bp="grid vertical-center" class="match-row" v-if="!liveOnly || match.isLive !== 'false'" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in matches">
-          <div bp="6" v-if="match.isLigueShow === 'false'">
+          <div bp="6" v-if="match.isLigueShow !== 'true'">
             <div bp="grid vertical-center">
               <ClubLogo v-bind:team="match.home"/>
               <span bp="2 2@sm"><h2>vs</h2></span>
