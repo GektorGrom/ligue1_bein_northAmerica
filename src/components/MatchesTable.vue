@@ -170,6 +170,14 @@ a {
   right: 0;
   padding: 0 25px;
 }
+@media (prefers-color-scheme: dark) {
+  .container-footer {
+    background-color: #6B6C21;
+  }
+  .match-row {
+    border-top-color: #9a952ea1;
+  }
+}
 a {
   text-decoration: none;
   color: #673ab7a3;
@@ -209,6 +217,28 @@ a {
   border-right-color: #bdbdbd85;
   border-top-color: #bdbdbd85;
 }
+
+@media (prefers-color-scheme: dark) {
+  .muted {
+    background-color: #edf5452b;
+    border-top-color: #92894763;
+  }
+
+  .muted::before {
+    border-right-color: #92894763;
+    border-top-color: #92894763;
+  }
+
+  .muted::after {
+    border-right-color: #92894763;
+    border-top-color: #92894763;
+  }
+
+  a {
+    color: #bfd01ea1;
+  }
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 2.5s;
 }
@@ -231,4 +261,13 @@ a {
   width: 100%;
   padding: 0 15px;
 }
+
+</style>
+
+<style>
+  @media (prefers-color-scheme: dark) {
+    img {
+      filter: brightness(80%);
+    }
+  }
 </style>

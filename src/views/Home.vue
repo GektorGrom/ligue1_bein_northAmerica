@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <a href="http://www.ligue1.com/">
-      <img class="img-full-width logo-img" src="../assets/naming-ligue-1-lfp-1.png">
+      <div class="adaptive-logo">
+        <img class="img-full-width logo-img" src="../assets/naming-ligue-1-lfp-1.png" alt="Ligue 1 Logo">
+        <img class="img-full-width logo-img" src="../assets/l_dark.png" alt="Dark Ligue 1 Logo">
+      </div>
     </a>
     <MatchesTable />
   </div>
@@ -26,7 +29,12 @@ export default {
   body {
     background-color: #dbde3b;
   }
-  .logo-img {
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #6B6C21;
+    }
+  }
+    .logo-img {
     max-width: 450px;
   }
   .ellipsis {
@@ -34,5 +42,22 @@ export default {
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+  }
+  .adaptive-logo img:first-child {
+    display: inline-block;
+    filter: brightness(100%);
+  }
+  .adaptive-logo img:last-child {
+    display: none;
+    filter: brightness(100%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .adaptive-logo img:first-child {
+      display: none;
+    }
+    .adaptive-logo img:last-child {
+      display: inline-block;
+    }
   }
 </style>
