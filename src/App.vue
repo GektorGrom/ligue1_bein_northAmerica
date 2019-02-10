@@ -19,6 +19,13 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+@media (prefers-color-scheme: dark) {
+  #app {
+    color: #c7c7c7;
+  }
+}
+
 @media (min-width: 900px) {
   #app {
     max-width: 980px;

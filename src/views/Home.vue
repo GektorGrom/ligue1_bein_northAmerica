@@ -3,7 +3,7 @@
     <a href="http://www.ligue1.com/">
       <div class="adaptive-logo">
         <img class="img-full-width logo-img" src="../assets/naming-ligue-1-lfp-1.png" alt="Ligue 1 Logo">
-        <img class="img-full-width logo-img" src="../assets/l_dark.png" alt="Dark Ligue 1 Logo">
+        <img class="img-full-width logo-img" src="../assets/lfp-dark.png" alt="Dark Ligue 1 Logo">
       </div>
     </a>
     <MatchesTable />
@@ -31,7 +31,7 @@ export default {
   }
   @media (prefers-color-scheme: dark) {
     body {
-      background-color: #6B6C21;
+      background-color: #353535;
     }
   }
     .logo-img {

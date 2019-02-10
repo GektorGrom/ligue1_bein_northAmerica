@@ -138,7 +138,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 h3 {
   margin: 40px 0 0;
 }
@@ -163,7 +163,7 @@ a {
   margin: 0 auto 0;
 }
 .container-footer {
-  position: fixed;
+  position: sticky;
   background-color: #dbde3b;
   bottom: 0;
   left: 0;
@@ -172,10 +172,10 @@ a {
 }
 @media (prefers-color-scheme: dark) {
   .container-footer {
-    background-color: #6B6C21;
+    background-color: #353535;
   }
   .match-row {
-    border-top-color: #9a952ea1;
+    border-top-color: rgba(106, 106, 106, 0.39);
   }
 }
 a {
@@ -186,7 +186,7 @@ a {
 }
 .matches-block {
   /*min-height: 500px;*/
-  margin-bottom: 100px;
+  margin-bottom: 10px;
 }
 .matches-block-loading {
   height: calc( 100vh - 50vh );
@@ -220,22 +220,22 @@ a {
 
 @media (prefers-color-scheme: dark) {
   .muted {
-    background-color: #edf5452b;
-    border-top-color: #92894763;
+    background-color: rgba(99, 99, 99, 0.17);
+    border-top-color: rgba(106, 106, 106, 0.39);
   }
 
   .muted::before {
-    border-right-color: #92894763;
-    border-top-color: #92894763;
+    border-right-color: rgba(106, 106, 106, 0.39);
+    border-top-color: rgba(106, 106, 106, 0.39);
   }
 
   .muted::after {
-    border-right-color: #92894763;
-    border-top-color: #92894763;
+    border-right-color: rgba(106, 106, 106, 0.39);
+    border-top-color: rgba(106, 106, 106, 0.39);
   }
 
   a {
-    color: #bfd01ea1;
+    color: #c7c7c7;
   }
 }
 
@@ -268,6 +268,10 @@ a {
   @media (prefers-color-scheme: dark) {
     img {
       filter: brightness(80%);
+    }
+
+    .btn {
+      color: #c7c7c7;
     }
   }
 </style>
