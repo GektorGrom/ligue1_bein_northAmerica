@@ -7736,6 +7736,11 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+swipe-listener@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/swipe-listener/-/swipe-listener-1.0.7.tgz#f40495f5765f7d5fe9eef6dcbb12624069ef220b"
+  integrity sha512-XoFTO0LoXhO6KaLMuhd2XbHcofLg0fLSDu0kkNDFMJmfo/+hBCb14I8rrG2AJVv1jLhDpDM7MTDUE4lloPRRdA==
+
 table@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/table/-/table-4.0.2.tgz#a33447375391e766ad34d3486e6e2aedc84d2e36"
@@ -7897,10 +7902,6 @@ to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
-
-tocca@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/tocca/-/tocca-2.0.3.tgz#b5d1d97801093860c2afdb47e3e48edb810dd3ca"
 
 topo@2.x.x:
   version "2.0.2"

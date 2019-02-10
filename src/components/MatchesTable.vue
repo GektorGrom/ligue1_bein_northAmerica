@@ -52,7 +52,7 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import addDays from 'date-fns/add_days'
 import { RadarSpinner  } from 'epic-spinners';
-import 'tocca';
+import SwipeListener from 'swipe-listener';
 
 import ClubLogo from '@/components/ClubLogo.vue';
 import ChanelLogo from '@/components/ChanelLogo.vue';
@@ -100,13 +100,25 @@ export default {
         return;
       }
     });
-    document.getElementById('app').addEventListener('swipeleft', (e) => {
-      e.preventDefault();
-      this.$router.push(this.nextLink);
-    });
-    document.getElementById('app').addEventListener('swiperight', (e) => {
-      e.preventDefault();
-      this.$router.push(this.prevLink);
+    const container = document.getElementById('app');
+    SwipeListener(container);
+    // todo remove event listener before destroy
+    container.addEventListener('swipe', (e) => {
+      try {
+        if (e.detail.touch) {
+          if (e.detail.directions.left) {
+            e.preventDefault();
+            this.$router.push(this.nextLink);
+          }
+          if (e.detail.directions.right) {
+            e.preventDefault();
+            this.$router.push(this.prevLink);
+          }
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+
     });
   },
   computed: {
