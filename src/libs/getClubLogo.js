@@ -88,6 +88,10 @@ const getClubLogo = (team) => {
   if (t.includes('reims')) {
     return 'stade-de-reims.svg'
   }
+  // Stade Brestois 29
+  if (t.includes('brestois')) {
+    return 'stade-brestois-29.svg'
+  }
   return 'unknown.svg';
 }
 export default getClubLogo;
