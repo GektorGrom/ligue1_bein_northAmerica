@@ -14,7 +14,7 @@
     </div>
     <transition name="fade" :duration="2500">
       <div bp="grid 12" class="matches-block" v-if="showMatches">
-        <div bp="grid vertical-center" class="match-row" v-if="!liveOnly || match.isLive !== 'false'" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in matches">
+        <div bp="grid vertical-center" class="match-row" v-bind:class="{ muted: match.isLive === 'false' }" v-bind:key="match.id" v-for="match in filteredMatches">
           <div bp="6" v-if="match.isLigueShow !== 'true'">
             <div bp="grid vertical-center">
               <ClubLogo v-bind:team="match.home"/>
@@ -48,10 +48,10 @@
 
 <script>
 import axios from 'axios';
+import parseISO from 'date-fns/parseISO';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
-import addDays from 'date-fns/add_days'
-import { RadarSpinner  } from 'epic-spinners';
+import addDays from 'date-fns/addDays'
 import SwipeListener from 'swipe-listener';
 
 import ClubLogo from '@/components/ClubLogo.vue';
@@ -62,27 +62,26 @@ export default {
   components: {
     ClubLogo,
     ChanelLogo,
-    RadarSpinner
   },
   data() {
     return {
-      today: format(parse(this.$route.params.date || new Date), 'YYYY-MM-DD'),
-      dayName: format(parse(this.$route.params.date || new Date), 'dddd'),
+      today: format(parseISO(this.$route.params.date || new Date().toISOString()), 'yyyy-MM-dd'),
+      dayName: format(parseISO(this.$route.params.date || new Date().toISOString()), 'EEEE'),
       matches: [],
       isRerun: false,
       liveOnly: false,
       isLoading: true,
-      prevLink: '/matches/' + format(addDays(parse(this.$route.params.date || new Date), -1), 'YYYY-MM-DD'),
-      nextLink: '/matches/' + format(addDays(parse(this.$route.params.date || new Date), 1), 'YYYY-MM-DD')
+      prevLink: '/matches/' + format(addDays(parseISO(this.$route.params.date || new Date().toISOString()), -1), 'yyyy-MM-dd'),
+      nextLink: '/matches/' + format(addDays(parseISO(this.$route.params.date || new Date().toISOString()), 1), 'yyyy-MM-dd')
     };
   },
   methods: {
     parseTime: (epoch) => {
-      return format(parse(epoch), 'HH:mm');
+      return format(parse(epoch, 'T', new Date()), 'HH:mm');
     },
   },
   mounted() {
-    axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${this.$route.params.date || format(new Date, 'YYYY-MM-DD')}`)
+    axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${this.$route.params.date || format(new Date, 'yyyy-MM-dd')}`)
       .then(({ data }) => {
         this.matches = data.Items.sort((a, b) => a.start - b.start);
         this.isRerun = data.Items.some(el => el.isLive === 'false');
@@ -127,16 +126,21 @@ export default {
     },
     noMatches: function () {
       return !this.isLoading && this.matches.length === 0;
+    },
+    filteredMatches: function () {
+      return this.matches.filter(match => {
+        return !this.liveOnly || match.isLive !== 'false'
+      })
     }
   },
   watch: {
     '$route' (to) {
       this.isLoading = true;
       this.matches = [];
-      this.today = format(parse(this.$route.params.date), 'YYYY-MM-DD'),
-      this.dayName = format(parse(this.$route.params.date), 'dddd'),
-      this.prevLink = format(addDays(parse(to.params.date), -1), 'YYYY-MM-DD');
-      this.nextLink = format(addDays(parse(to.params.date), 1), 'YYYY-MM-DD');
+      this.today = format(parseISO(this.$route.params.date), 'yyyy-MM-dd');
+      this.dayName = format(parseISO(this.$route.params.date), 'EEEE');
+      this.prevLink = format(addDays(parseISO(to.params.date), -1), 'yyyy-MM-dd');
+      this.nextLink = format(addDays(parseISO(to.params.date), 1), 'yyyy-MM-dd');
       axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${to.params.date}`)
         .then(({ data }) => {
           this.isRerun = data.Items.some(el => el.isLive === 'false');
