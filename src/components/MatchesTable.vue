@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import parseISO from 'date-fns/parseISO';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
@@ -81,10 +80,16 @@ export default {
     },
   },
   mounted() {
-    axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${this.$route.params.date || format(new Date, 'yyyy-MM-dd')}`)
-      .then(({ data }) => {
-        this.matches = data.Items.sort((a, b) => a.start - b.start);
-        this.isRerun = data.Items.some(el => el.isLive === 'false');
+    fetch(`https://svbiszik4b.execute-api.us-west-2.amazonaws.com/dev/ligue1/schedule/${this.$route.params.date || format(new Date, 'yyyy-MM-dd')}?tz=${encodeURIComponent(new Intl.DateTimeFormat().resolvedOptions().timeZone)}`, {
+      mode: 'cors',
+      headers: {
+        Accept: 'application/json',
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.matches = data;
+        this.isRerun = data.some(el => el.isLive === 'false');
         this.isLoading = false;
       });
     addEventListener('keydown', (event) => {
@@ -141,10 +146,13 @@ export default {
       this.dayName = format(parseISO(this.$route.params.date), 'EEEE');
       this.prevLink = format(addDays(parseISO(to.params.date), -1), 'yyyy-MM-dd');
       this.nextLink = format(addDays(parseISO(to.params.date), 1), 'yyyy-MM-dd');
-      axios.get(`https://9t48n1rvwl.execute-api.us-west-2.amazonaws.com/dev/schedule?date=${to.params.date}`)
-        .then(({ data }) => {
-          this.isRerun = data.Items.some(el => el.isLive === 'false');
-          this.matches = data.Items.sort((a, b) => a.start - b.start);
+      fetch(`https://svbiszik4b.execute-api.us-west-2.amazonaws.com/dev/ligue1/schedule/${to.params.date}?tz=${encodeURIComponent(new Intl.DateTimeFormat().resolvedOptions().timeZone)}`, {
+        mode: 'cors',
+      })
+        .then(res => res.json())
+        .then((data) => {
+          this.isRerun = data.some(el => el.isLive === 'false');
+          this.matches = data;
           this.isLoading = false;
         });
 
