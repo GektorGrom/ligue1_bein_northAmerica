@@ -1,5 +1,17 @@
 const getChanelLogo = (chanel) => {
   const c = chanel.toLowerCase();
+  if (c === 'bt sport 1') {
+    return 'bt-sport-1.svg'
+  }
+  if (c === 'bt sport 2') {
+    return 'bt-sport-2.svg'
+  }
+  if (c === 'bt sport 3') {
+    return 'bt-sport-3.svg'
+  }
+  if (c.includes('espn')) {
+    return 'bt-sport-espn.svg'
+  }
   if (c.includes('hd')) {
     return 'Global.svg'
   }
