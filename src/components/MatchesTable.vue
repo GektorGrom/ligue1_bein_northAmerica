@@ -179,7 +179,7 @@ a {
 }
 .match-row {
   padding-top: 15px;
-  border-top: 1px solid #5c6bc099;
+  border-top: 1px solid rgba(106, 106, 106, 0.39);
 }
 .container {
   display: block;
