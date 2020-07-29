@@ -25,7 +25,7 @@ export default {
       return getClubLogo(this.team) === 'unknown.svg'
     },
     getLogoSrc: function() {
-      return `https://s3-us-west-2.amazonaws.com/ligue1-us-schedule/images/club-logo/${getClubLogo(this.team)}`
+      return `/assets/club-logos/${getClubLogo(this.team)}`
     }
   }
 };

@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     getLogoSrc: function() {
-      return `https://ligue1.jesse.co.ua/images/Chanel-logos/${getChanelLogo(this.chanel)}`
+      return `/assets/chanel-logos/${getChanelLogo(this.chanel)}`
     }
   }
 };
