@@ -80,10 +80,11 @@ export default {
     },
   },
   mounted() {
-    fetch(`https://svbiszik4b.execute-api.us-west-2.amazonaws.com/dev/ligue1/schedule/${this.$route.params.date || format(new Date, 'yyyy-MM-dd')}?tz=${encodeURIComponent(new Intl.DateTimeFormat().resolvedOptions().timeZone)}`, {
+    fetch(`https://svbiszik4b.execute-api.us-west-2.amazonaws.com/ligue1/schedule/${this.$route.params.date || format(new Date, 'yyyy-MM-dd')}`, {
       mode: 'cors',
       headers: {
-        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-timezone-offset': new Intl.DateTimeFormat().resolvedOptions().timeZone
       }
     })
       .then((res) => res.json())
@@ -146,8 +147,12 @@ export default {
       this.dayName = format(parseISO(this.$route.params.date), 'EEEE');
       this.prevLink = format(addDays(parseISO(to.params.date), -1), 'yyyy-MM-dd');
       this.nextLink = format(addDays(parseISO(to.params.date), 1), 'yyyy-MM-dd');
-      fetch(`https://svbiszik4b.execute-api.us-west-2.amazonaws.com/dev/ligue1/schedule/${to.params.date}?tz=${encodeURIComponent(new Intl.DateTimeFormat().resolvedOptions().timeZone)}`, {
+      fetch(`https://svbiszik4b.execute-api.us-west-2.amazonaws.com/ligue1/schedule/${to.params.date}`, {
         mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-timezone-offset': new Intl.DateTimeFormat().resolvedOptions().timeZone
+        }
       })
         .then(res => res.json())
         .then((data) => {
