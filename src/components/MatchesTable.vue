@@ -24,7 +24,7 @@
           </div>
           <div bp="6" v-if="match.isLigueShow === 'true'">
             <div bp="grid vertical-center">
-              <img bp="3 hide show@md" class="ligue-one-show__img" src="https://ligue1.jesse.co.ua/images/club-logo/football.svg" alt="Ligue 1 Show logo">
+              <img bp="3 hide show@md" class="ligue-one-show__img" src="/assets/club-logos/football.svg" alt="Ligue 1 Show logo">
               <h2 bp="9@md" class="text-left">{{match.title}}</h2>
             </div>
           </div>
