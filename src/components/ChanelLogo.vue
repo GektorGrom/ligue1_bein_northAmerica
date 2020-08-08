@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     getLogoSrc: function() {
-      return `/assets/chanel-logos/${getChanelLogo(this.chanel)}`
+      return `/assets/channel-logos/${getChanelLogo(this.chanel)}`
     }
   }
 };
