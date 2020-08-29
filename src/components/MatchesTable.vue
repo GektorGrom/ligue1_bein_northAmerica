@@ -27,7 +27,7 @@
         </button>
       </div>
       <div class="self-end justify-end">
-        <h2 class="text-left">{{ dayName }}</h2>
+        <div class="text-left day">{{ dayName }}</div>
         <h5 class="text-right">{{ today }}</h5>
       </div>
     </div>
@@ -375,6 +375,12 @@ a {
 
 .justify-end {
   justify-self: end;
+}
+
+.day {
+  font-size: 26px;
+  font-weight: 600;
+  margin: 5px 0;
 }
 </style>
 
