@@ -22,7 +22,7 @@ const getClubLogo = (team) => {
   }
   // FC Nantes
   if (t.includes('nant')) {
-    return 'fc-nantes.svg'
+    return 'nanteslogo.png'
   }
   // OGC Nice
   if (t.includes('nice')) {
@@ -30,7 +30,7 @@ const getClubLogo = (team) => {
   }
   // Girondins de Bordeaux
   if (t.includes('bord')) {
-    return 'girondins-de-bordeaux.svg'
+    return 'bordeaux-logo.png'
   }
   // EA Guingamp
   if (t.includes('guin')) {
@@ -45,7 +45,7 @@ const getClubLogo = (team) => {
     return 'sm-caen.svg'
   }
   // AS Saint-Etienne
-  if (t.includes('etienn')) {
+  if (t.includes('saint')) {
     return 'as-saint-etienne.svg'
   }
   // Dijon FCO
@@ -86,12 +86,20 @@ const getClubLogo = (team) => {
   }
   // Stade Reims
   if (t.includes('reims')) {
-    return 'stade-de-reims.svg'
+    return 'reims-logo.png'
   }
   // Stade Brestois 29
-  if (t.includes('brestois')) {
-    return 'stade-brestois-29.svg'
+  if (t.includes('brest')) {
+    return 'stade_brestois_29_logo.png'
   }
-  return 'unknown.svg';
+  // RC Lens
+  if (t.includes('lens')) {
+    return 'lens_logo-768x768.png'
+  }
+  // FC Lorient
+  if (t.includes('lorient')) {
+    return 'lorient_logo.png'
+  }
+  return 'ligue1_square.png';
 }
 export default getClubLogo;

@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     clubLogo: function() {
-      return getClubLogo(this.team) === 'unknown.svg'
+      return getClubLogo(this.team) === 'ligue1_square.png'
     },
     getLogoSrc: function() {
       return `/assets/club-logos/${getClubLogo(this.team)}`
