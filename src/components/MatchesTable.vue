@@ -116,7 +116,7 @@ export default {
       ),
       matches: [],
       isRerun: false,
-      liveOnly: false,
+      liveOnly: true,
       isLoading: true,
       prevLink:
         "/matches/" +
