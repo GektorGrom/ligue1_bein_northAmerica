@@ -1,11 +1,11 @@
 <template>
   <div bp="5@sm 4" class="logo-wrapper">
     <div v-if="clubLogo">
-      <div class="unknown-club-name hide-small">{{team}}</div>
+      <div class="unknown-club-name hide-small">{{ team }}</div>
       <img class="narrow-img hide-small" v-bind:src="getLogoSrc" :alt="team">
-      <h2 class="hide-large ellipsis">{{team}}</h2>
+      <h2 class="hide-large ellipsis">{{ team }}</h2>
     </div>
-    <img v-else v-bind:src="getLogoSrc" :alt="team">
+    <img class="regular-club-logo" v-else v-bind:src="getLogoSrc" :alt="team">
   </div>
 </template>
 
@@ -17,47 +17,54 @@ export default {
   props: {
     team: {
       type: String,
-      default: 'none'
+      default: 'none',
     },
   },
   computed: {
-    clubLogo: function() {
-      return getClubLogo(this.team) === 'ligue1_square.png'
+    clubLogo: function () {
+      return getClubLogo(this.team) === 'ligue1_square.png';
     },
-    getLogoSrc: function() {
-      return `/assets/club-logos/${getClubLogo(this.team)}`
-    }
-  }
+    getLogoSrc: function () {
+      return `/assets/club-logos/${getClubLogo(this.team)}`;
+    },
+  },
 };
 </script>
 
 <style scoped>
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  .narrow-img {
-    width: 60%;
-    height: 60%;
-  }
-  .unknown-club-name {
-    font-weight: 700;
-    font-size:18px;
-  }
-  @media (max-width: 480px) {
-    .hide-small {
-      display: none;
-    }
-  }
-  @media (min-width: 480px) {
-    .hide-large {
-      display: none;
-    }
-  }
+img {
+  width: 100%;
+  height: 100%;
+}
 
-  /*.logo-wrapper {*/
-    /*border-radius: 50%;*/
-    /*background-color: #fff;*/
-    /*height: 100%;*/
-  /*}*/
+.narrow-img {
+  width: 60%;
+  height: 60%;
+}
+
+.unknown-club-name {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+@media (max-width: 480px) {
+  .hide-small {
+    display: none;
+  }
+}
+
+@media (min-width: 480px) {
+  .hide-large {
+    display: none;
+  }
+}
+
+.logo-wrapper {
+  height: auto;
+}
+
+.regular-club-logo {
+  max-height: 170px;
+  object-fit: contain;
+}
 </style>
