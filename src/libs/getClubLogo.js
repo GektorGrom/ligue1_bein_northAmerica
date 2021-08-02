@@ -17,7 +17,7 @@ const getClubLogo = (team) => {
     return 'olympique-lyonnais.svg';
   }
   // Montpellier Hérault SC
-  if (t.includes('mont')) {
+  if (t.includes('montp')) {
     return 'montpellier-herault-sc.svg';
   }
   // FC Nantes
@@ -101,7 +101,7 @@ const getClubLogo = (team) => {
     return 'lorient_logo.png';
   }
   // Clermont Foot 63
-  if (t.includes('clermont')) {
+  if (t.toLowerCase().includes('clermont')) {
     return 'clermont-foot.svg';
   }
   return 'ligue1_square.png';
