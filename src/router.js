@@ -1,16 +1,16 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import Home from './views/Home.vue';
+import RootPage from './views/RootPage.vue';
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home,
+    component: RootPage,
   },
   {
     path: '/matches/:date',
     name: 'particular',
-    component: Home,
+    component: RootPage,
   },
 ];
 export default createRouter({

@@ -104,6 +104,10 @@ const getClubLogo = (team) => {
   if (t.toLowerCase().includes('clermont')) {
     return 'clermont-foot.svg';
   }
+  // AJ Auxerre
+  if (t.toLowerCase().includes('clermont')) {
+    return 'clermont-foot.svg';
+  }
   return 'ligue1_square.png';
 };
 export default getClubLogo;

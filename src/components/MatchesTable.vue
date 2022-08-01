@@ -2,24 +2,11 @@
   <div>
     <div bp="grid 4">
       <div>
-        <a href="http://www.ligue1.com/">
-          <div class="adaptive-logo text-left">
-            <img
-              class="img-full-width logo-img"
-              src="/assets/ligue1logo.png"
-              alt="Ligue 1 Logo"
-            />
-            <img
-              class="img-full-width logo-img"
-              src="/assets/ligue1logo.png"
-              alt="Dark Ligue 1 Logo"
-            />
-          </div>
-        </a>
+        <ligue1-logo />
       </div>
       <div class="self-end">
         <button
-          v-if="isRerun"
+          v-if="hasNotLiveEvents"
           v-on:click="liveOnly = !liveOnly"
           class="btn"
         >
@@ -44,18 +31,18 @@
         <div
           bp="grid vertical-center"
           class="match-row"
-          v-bind:class="{ muted: match.isLive === 'false' }"
+          v-bind:class="{ muted: match.isLive === false }"
           v-bind:key="match.id"
           v-for="match in filteredMatches"
         >
-          <div bp="6" v-if="match.isLigueShow !== 'true'">
+          <div bp="6" v-if="match.isLigueShow !== true">
             <div bp="grid vertical-center">
               <ClubLogo v-bind:team="match.home" />
               <span bp="2 2@sm"><h2>vs</h2></span>
               <ClubLogo v-bind:team="match.away" />
             </div>
           </div>
-          <div bp="6" v-if="match.isLigueShow === 'true'">
+          <div bp="6" v-if="match.isLigueShow === true">
             <div bp="grid vertical-center">
               <img
                 bp="3 hide show@md"
@@ -89,6 +76,8 @@
 </template>
 
 <script>
+import Ligue1Logo from '@/components/Ligue1Logo';
+import strToBool from '@/libs/strToBool';
 import parseISO from "date-fns/parseISO";
 import parse from "date-fns/parse";
 import format from "date-fns/format";
@@ -101,6 +90,7 @@ import ChanelLogo from "@/components/ChanelLogo.vue";
 export default {
   name: "MatchesTable",
   components: {
+    Ligue1Logo,
     ClubLogo,
     ChanelLogo
   },
@@ -115,7 +105,7 @@ export default {
         "EEEE"
       ),
       matches: [],
-      isRerun: false,
+      hasNotLiveEvents: false,
       liveOnly: true,
       isLoading: true,
       prevLink:
@@ -158,8 +148,14 @@ export default {
     )
       .then(res => res.json())
       .then(data => {
-        this.matches = data;
-        this.isRerun = data.some(el => el.isLive === "false");
+        this.matches = data.map((el) => {
+          return {
+            ...el,
+            isLive: strToBool(el.isLive),
+            isLigueShow: strToBool(el.isLigueShow),
+          }
+        });
+        this.hasNotLiveEvents = data.some(el => strToBool(el.isLive) === false);
         this.isLoading = false;
       });
     addEventListener("keydown", event => {
@@ -203,7 +199,7 @@ export default {
     },
     filteredMatches: function() {
       return this.matches.filter(match => {
-        return !this.liveOnly || match.isLive !== "false";
+        return !this.liveOnly || match.isLive !== false;
       });
     }
   },
@@ -234,8 +230,14 @@ export default {
       )
         .then(res => res.json())
         .then(data => {
-          this.isRerun = data.some(el => el.isLive === "false");
-          this.matches = data;
+          this.hasNotLiveEvents = data.some(el => strToBool(el.isLive) === false);
+          this.matches = data.map((el) => {
+            return {
+              ...el,
+              isLive: strToBool(el.isLive),
+              isLigueShow: strToBool(el.isLigueShow),
+            }
+          });
           this.isLoading = false;
         });
     }

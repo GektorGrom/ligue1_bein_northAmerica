@@ -9,7 +9,6 @@
 import MatchesTable from '@/components/MatchesTable.vue';
 
 export default {
-  name: 'home',
   components: {
     MatchesTable,
   },
